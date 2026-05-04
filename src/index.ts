@@ -1,38 +1,26 @@
-// client code
-// get sql databases and use them without createing their objects directly
-import { NoSQLDatabaseFactory } from "./factory/factories/NoSQLDatabaseFactory.js";
-import { SQLDatabaseFactory } from "./factory/factories/SQLDatabaseFactory.js";
+import { Cake } from "./classes/Cake.js";
+import { ChocoDecorator } from "./classes/decorators/ChocoDecorator.js";
+import { IcingDecorator } from "./classes/decorators/IcingDecorator.js";
+import { StrawberryDecorator } from "./classes/decorators/StrawberryDecorator.js";
 
-// using NoSQL database factory to create NoSQL databases
-const noSqlDatabaseFactory = new NoSQLDatabaseFactory();
+const butterCake = new Cake();
+console.log(butterCake.getDescription()); // Output: Butter cake
+console.log(butterCake.getCost()); // Output: 10
 
-const mongoDB = noSqlDatabaseFactory.createDatabase("MongoDb");
-mongoDB.connect(); 
-mongoDB.disconnect();
+console.log('---------------------');
 
-const mariaDB = noSqlDatabaseFactory.createDatabase("MariaDb");
-mariaDB.connect();
-mariaDB.disconnect();
+const icingCake = new IcingDecorator(butterCake);
+console.log(icingCake.getDescription()); // Output: Butter cake, with icing
+console.log(icingCake.getCost()); // Output: 12
 
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
+console.log('---------------------');
 
-// using SQL database factory to create SQL databases
-const sqlDatabaseFactory = new SQLDatabaseFactory();
+const strawberryIcingCake = new StrawberryDecorator(new IcingDecorator(butterCake));
+console.log(strawberryIcingCake.getDescription()); // Output: Butter cake, with icing, with strawberries
+console.log(strawberryIcingCake.getCost()); // Output: 15
 
-const mySQLDatabase = sqlDatabaseFactory.createDatabase("MySql");
-mySQLDatabase.connect();
-mySQLDatabase.disconnect();
+console.log('---------------------');
 
-const postgreSQLDatabase = sqlDatabaseFactory.createDatabase("PostgreSql");
-postgreSQLDatabase.connect();
-postgreSQLDatabase.disconnect();
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
+const chocolateStrawberryIcingCake = new ChocoDecorator(new StrawberryDecorator(new IcingDecorator(butterCake)));
+console.log(chocolateStrawberryIcingCake.getDescription()); // Output: Butter cake, with icing, with strawberries, with chocolate
+console.log(chocolateStrawberryIcingCake.getCost()); // Output: 19
